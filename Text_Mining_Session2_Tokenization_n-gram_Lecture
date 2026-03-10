@@ -4,7 +4,7 @@
   "metadata": {
     "colab": {
       "provenance": [],
-      "authorship_tag": "ABX9TyNEyEiLHP+gNsuy+9fHUwNX",
+      "authorship_tag": "ABX9TyMFyBUkrtzyb7R56mdZxJx3",
       "include_colab_link": true
     },
     "kernelspec": {
@@ -27,15 +27,6 @@
       ]
     },
     {
-      "cell_type": "code",
-      "execution_count": null,
-      "metadata": {
-        "id": "uWIcSdFb554v"
-      },
-      "outputs": [],
-      "source": []
-    },
-    {
       "cell_type": "markdown",
       "source": [
         "**Tokenization and n-gram**"
@@ -43,6 +34,727 @@
       "metadata": {
         "id": "cQReF-Sd5_F_"
       }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Natural Language Toolkit (**NLTK**) is a Python library used for natural language processing (NLP)—working with human language text such as:\n",
+        "\n",
+        "Tokenizing text (splitting sentences/words)\n",
+        "\n",
+        "Removing stopwords\n",
+        "\n",
+        "Stemming or lemmatization\n",
+        "\n",
+        "Text classification\n",
+        "\n",
+        "Language modeling"
+      ],
+      "metadata": {
+        "id": "WaP1afrqDnqw"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import nltk\n",
+        "nltk.download('punkt') #Punkt tokenizer model is used for sentence and word tokenization.\n",
+        "nltk.download('punkt_tab') #tokenizer tables used internally by Punkt"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "T_YD0QUB6f2p",
+        "outputId": "cc3fe449-f091-4cb4-f812-bfc0811a55bc"
+      },
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "[nltk_data] Downloading package punkt to /root/nltk_data...\n",
+            "[nltk_data]   Unzipping tokenizers/punkt.zip.\n",
+            "[nltk_data] Downloading package punkt_tab to /root/nltk_data...\n",
+            "[nltk_data]   Unzipping tokenizers/punkt_tab.zip.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "True"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 2
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "text1 = \"The city of Auckland is in New Zealand which is in the Pacific\"\n",
+        "text2 = \"It doesn't matter what the name is.\"\n",
+        "text3 = \"The car's tyres were big.\"\n",
+        "text4 = \"This is an exmaple of pre-processing\"\n",
+        "\n",
+        "#breaks the text into tokens (words, punctuation)\n",
+        "text = nltk.word_tokenize(text1)\n",
+        "print(text)\n",
+        "text = nltk.word_tokenize(text2)\n",
+        "print(text)\n",
+        "text = nltk.word_tokenize(text3)\n",
+        "print(text)\n",
+        "text = nltk.word_tokenize(text4)\n",
+        "print(text)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "R-wyJ_SiBWzy",
+        "outputId": "306a4363-d77d-4acf-a6e7-fe51ae3bc070"
+      },
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "['The', 'city', 'of', 'Auckland', 'is', 'in', 'New', 'Zealand', 'which', 'is', 'in', 'the', 'Pacific']\n",
+            "['It', 'does', \"n't\", 'matter', 'what', 'the', 'name', 'is', '.']\n",
+            "['The', 'car', \"'s\", 'tyres', 'were', 'big', '.']\n",
+            "['This', 'is', 'an', 'exmaple', 'of', 'pre-processing']\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**Use of a different tokenizer**"
+      ],
+      "metadata": {
+        "id": "_HKgXzs_Cano"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**Gensim** is a Python library used for **natural language processing and topic modeling**. It is commonly used for:\n",
+        "\n",
+        "Word embeddings (Word2Vec, FastText)\n",
+        "\n",
+        "Topic modeling (LDA)\n",
+        "\n",
+        "Document similarity\n",
+        "\n",
+        "Text vectorization"
+      ],
+      "metadata": {
+        "id": "HvWcR2r7DUv5"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install gensim\n",
+        "from gensim.utils import tokenize # Note: this library is not part of nltk so install using \"pip3 install gensim\" if required.\n",
+        "print(list(tokenize(text1))) #a function that splits text into words (tokens)\n",
+        "print(list(tokenize(text2)))\n",
+        "print(list(tokenize(text3)))\n",
+        "print(list(tokenize(text4)))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "rqdKGoDGCcsw",
+        "outputId": "99bbc865-9d85-44ff-e556-1be939728ce9"
+      },
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Collecting gensim\n",
+            "  Downloading gensim-4.4.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (8.4 kB)\n",
+            "Requirement already satisfied: numpy>=1.18.5 in /usr/local/lib/python3.12/dist-packages (from gensim) (2.0.2)\n",
+            "Requirement already satisfied: scipy>=1.7.0 in /usr/local/lib/python3.12/dist-packages (from gensim) (1.16.3)\n",
+            "Requirement already satisfied: smart_open>=1.8.1 in /usr/local/lib/python3.12/dist-packages (from gensim) (7.5.1)\n",
+            "Requirement already satisfied: wrapt in /usr/local/lib/python3.12/dist-packages (from smart_open>=1.8.1->gensim) (2.1.1)\n",
+            "Downloading gensim-4.4.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (27.9 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m27.9/27.9 MB\u001b[0m \u001b[31m56.5 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hInstalling collected packages: gensim\n",
+            "Successfully installed gensim-4.4.0\n",
+            "['The', 'city', 'of', 'Auckland', 'is', 'in', 'New', 'Zealand', 'which', 'is', 'in', 'the', 'Pacific']\n",
+            "['It', 'doesn', 't', 'matter', 'what', 'the', 'name', 'is']\n",
+            "['The', 'car', 's', 'tyres', 'were', 'big']\n",
+            "['This', 'is', 'an', 'exmaple', 'of', 'pre', 'processing']\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**Pre-processing Examples**\n",
+        "\n",
+        "*Cleaning strings*"
+      ],
+      "metadata": {
+        "id": "8LAJbIpUK4oA"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**Remove numbers**"
+      ],
+      "metadata": {
+        "id": "HshAg1ROLIrV"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import re #regular expression module\n",
+        "text5 = 'There are 6 cities in New Zealand and 2 of which are in the North Island'\n",
+        "result = re.sub(r'\\d+', '', text5) #re.sub(pattern, replacement, text)\n",
+        "print(result)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "SLf8lO8yLKq2",
+        "outputId": "c644ca9d-1af4-4fc6-a472-aaaf44a64051"
+      },
+      "execution_count": 5,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "There are  cities in New Zealand and  of which are in the North Island\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**Remove punctuation- member of** [!”#$%&’()*+,-./:;<=>?@[]^_`{|}~]:"
+      ],
+      "metadata": {
+        "id": "IIRJUBcmN5YL"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**string** is a built-in Python module that provides predefined character sets such as:\n",
+        "\n",
+        "lowercase letters\n",
+        "\n",
+        "uppercase letters\n",
+        "\n",
+        "digits\n",
+        "\n",
+        "punctuation\n",
+        "\n",
+        "These are helpful when cleaning or processing text."
+      ],
+      "metadata": {
+        "id": "oKN0g0n-PnuT"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "'''\n",
+        "1) str → built-in string class\n",
+        "2) str.maketrans(characters to replace, characters to replace them with,characters to delete) creates a translation table for the translate() function.\n",
+        "3) translate() applies the translation table to the string.\n",
+        "'''\n",
+        "import string\n",
+        "text6 = 'Have you had your lunch? If not Peter/s (He lives nearby) father can get you some!'\n",
+        "result = text6.translate(str.maketrans(' ',' ', string.punctuation))\n",
+        "print(result)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "nJYsmRrYN-rF",
+        "outputId": "2dc15f56-4987-4376-8b96-37c38fb0260d"
+      },
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Have you had your lunch If not Peters He lives nearby father can get you some\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**remove white spaces**"
+      ],
+      "metadata": {
+        "id": "Ub-tiqOUUH-K"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "text7 = ' \\t a string example with tabs\\t'\n",
+        "print(text7)\n",
+        "text7 = text7.strip()\n",
+        "print(text7)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "kpst1tV1UMcy",
+        "outputId": "c815e572-e192-45c0-ff2a-2a7673cc8efd"
+      },
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " \t a string example with tabs\t\n",
+            "a string example with tabs\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**Remove stop words**"
+      ],
+      "metadata": {
+        "id": "yZd0jmgJUWKy"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**NLTK**"
+      ],
+      "metadata": {
+        "id": "_xPfJ3r0UbVs"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "'''A stopword is a common word in a language that usually carries little meaning on its own and\n",
+        "is often removed during natural language processing (NLP) tasks to focus on the important words.'''\n",
+        "import nltk\n",
+        "nltk.download('stopwords')"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "uerU5VbjUXob",
+        "outputId": "495575d9-b7aa-4467-8afb-e0b1832969b8"
+      },
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "[nltk_data] Downloading package stopwords to /root/nltk_data...\n",
+            "[nltk_data]   Unzipping corpora/stopwords.zip.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "True"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 8
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from nltk.corpus import stopwords #a collection of text datasets and resources in NLTK (corpora)\n",
+        "from nltk.tokenize import word_tokenize #a specific corpus containing lists of common words that carry little meaning (like “the”, “is”, “and”)\n",
+        "stop_words_NLTK = set(stopwords.words('english'))\n",
+        "print(stop_words_NLTK)\n",
+        "#print(len(stop_words_NLTK))\n",
+        "tokens = word_tokenize(text1)\n",
+        "print (result)\n",
+        "my_stop_words = stop_words_NLTK\n",
+        "print(len(my_stop_words))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "QdhdOnrZVn6b",
+        "outputId": "14ba11e7-aabb-4594-b1ed-ca3092a3f93f"
+      },
+      "execution_count": 9,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "{'me', 'into', 'you', 'them', \"doesn't\", 'below', \"he'd\", 'more', 'y', 'such', 'between', \"they're\", 'by', 'can', 'up', 'does', 'yourself', 'an', 'same', 'who', 'your', 'what', \"i'm\", 'any', \"we'd\", 'will', 'against', 'll', \"shouldn't\", 'once', 'ma', 'again', 'above', \"should've\", \"you're\", 'needn', 'than', \"you've\", 'not', 'd', 'she', 'nor', \"you'd\", 'his', 'doing', \"they'll\", 'are', 'shouldn', 'own', 'which', 'didn', 'shan', 'there', 'be', 'mustn', 've', 'very', 'hers', 'having', \"haven't\", 'only', 'theirs', 'too', 'her', 'before', 'just', \"she'll\", 'because', 'was', 'had', 'mightn', 'ourselves', \"that'll\", 'its', 'during', 'why', 'weren', 'whom', \"aren't\", 'they', 'down', 'under', 'and', \"mightn't\", 'is', 'both', 'should', 'we', 'won', 'in', \"i've\", 'been', \"we'll\", 'but', \"don't\", 'from', 'has', 'after', 'my', 'on', 'through', \"she's\", \"they've\", 'am', 'here', 'these', 't', 'our', 'out', 'all', 'with', \"weren't\", 'at', 'hasn', 'itself', 'him', 'how', 'm', 'where', \"wouldn't\", 'o', \"he's\", 'herself', 'their', 'no', 'myself', 'so', 'as', 'themselves', 'about', \"we're\", 'of', 'when', 'hadn', 'did', \"he'll\", 'other', 'that', 'some', \"i'd\", \"couldn't\", \"it'll\", 'to', 'wouldn', 'wasn', 'yourselves', 'or', \"hadn't\", 'then', \"hasn't\", 'aren', 'doesn', 'few', 'for', \"mustn't\", \"we've\", \"it's\", 'now', \"you'll\", \"they'd\", 'over', 'were', 's', 'himself', 'have', 'ours', 'being', 'while', 'a', \"won't\", 'the', 'until', \"needn't\", 'i', \"i'll\", 'haven', 'each', \"wasn't\", 'further', 'ain', 'don', 'isn', \"it'd\", 're', 'yours', \"shan't\", 'it', 'off', \"didn't\", 'do', 'he', 'most', 'couldn', \"she'd\", 'if', \"isn't\", 'those', 'this'}\n",
+            "Have you had your lunch If not Peters He lives nearby father can get you some\n",
+            "198\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**Other sets of stop words**\n",
+        "\n",
+        "**sklearn**"
+      ],
+      "metadata": {
+        "id": "8QVjCVfkYfHn"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from sklearn.feature_extraction import text\n",
+        "stop_words_sklearn = text.ENGLISH_STOP_WORDS\n",
+        "print(stop_words_sklearn)\n",
+        "my_stop_words = stop_words_sklearn.union(my_stop_words)\n",
+        "print(len(my_stop_words))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "p8R1Sw5eYhAH",
+        "outputId": "8f1a60ed-cff8-48e4-e9de-d73b57e94dbd"
+      },
+      "execution_count": 10,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "frozenset({'me', 'twelve', 'un', 'more', 'between', 'nobody', 'can', 'often', 'everywhere', 'beside', 'move', 'full', 'will', 'against', 'take', 'mostly', 'than', 'although', 'fire', 'own', 'becoming', 'which', 'anywhere', 'beyond', 'former', 'because', 'get', 'during', 'someone', 'whom', 'much', 'they', 'four', 'under', 'seems', 'next', 'thence', 'after', 'my', 'several', 'these', 'nevertheless', 'out', 'ie', 'with', 'keep', 'thereafter', 'etc', 'at', 'almost', 'always', 'see', 'serious', 'myself', 'inc', 'via', 'about', 'other', 'cant', 'yourselves', 'or', 'for', 'latter', 'afterwards', 'over', 'were', 'became', 'i', 'further', 'around', 'amongst', 'do', 'seem', 'this', 'less', 'them', 'third', 'below', 'alone', 'part', 'give', 'anything', 'whither', 'thereby', 'meanwhile', 'an', 'describe', 'same', 'many', 'among', 'hereafter', 'behind', 'whereas', 'due', 'cannot', 'whether', 'elsewhere', 'become', 'ever', 'go', 'toward', 'beforehand', 'everything', 'bottom', 'mill', 'without', 'except', 'very', 'hers', 'already', 'nowhere', 'her', 'eleven', 'thus', 'its', 'why', 'anyway', 'detail', 'us', 'amoungst', 'both', 'we', 'in', 'but', 'from', 'has', 'on', 'hasnt', 'through', 'am', 'back', 'anyhow', 'our', 'all', 'whence', 'wherein', 'where', 'would', 'as', 'enough', 'every', 'when', 'whatever', 'two', 'last', 'front', 'while', 'along', 'the', 'please', 'whenever', 'everyone', 'nine', 'throughout', 'whereafter', 'indeed', 'cry', 'nothing', 'off', 'wherever', 'into', 'you', 'namely', 'well', 'by', 'anyone', 'yourself', 'ten', 'couldnt', 'any', 'never', 'another', 'mine', 'above', 'formerly', 'still', 'fifty', 'not', 'she', 'de', 'therefore', 'though', 'could', 'are', 'somehow', 'there', 'since', 'be', 'somewhere', 'found', 'either', 'per', 'sincere', 'was', 'had', 'ourselves', 'herein', 'and', 'hundred', 'is', 'therein', 'noone', 'been', 'five', 'moreover', 'hereupon', 'name', 'twenty', 'hereby', 'itself', 'him', 'eight', 'herself', 'perhaps', 'themselves', 'may', 'together', 'co', 'some', 'towards', 'now', 'something', 'seeming', 'onto', 'himself', 'have', 'ours', 'thereupon', 'also', 'eg', 'top', 'must', 'most', 'if', 'put', 'might', 'sometime', 'rather', 'hence', 'within', 'besides', 'such', 'three', 'up', 'neither', 'who', 'your', 'even', 'across', 'what', 'side', 'whoever', 'however', 'becomes', 'once', 'done', 'again', 'made', 'least', 'nor', 'his', 'ltd', 'interest', 'only', 'too', 'whole', 'before', 'empty', 'otherwise', 'thick', 'none', 'down', 'latterly', 'first', 'should', 'upon', 'whereby', 'here', 'thru', 'six', 'how', 'call', 'others', 'their', 'no', 'so', 'amount', 'of', 'show', 'sixty', 'that', 'to', 'whereupon', 'else', 'yet', 'then', 'whose', 'find', 'few', 'fill', 'being', 'a', 'bill', 'until', 'forty', 'con', 'each', 'seemed', 'sometimes', 'yours', 're', 'it', 'one', 'he', 'those', 'thin', 'fifteen', 'system'})\n",
+            "397\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**Spacy**"
+      ],
+      "metadata": {
+        "id": "QSHWCtZXaXPf"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from spacy.lang.en.stop_words import STOP_WORDS\n",
+        "stop_words_Spacy = STOP_WORDS\n",
+        "print(stop_words_Spacy)\n",
+        "my_stop_words = stop_words_Spacy.union(my_stop_words)\n",
+        "print(my_stop_words)\n",
+        "print(len(my_stop_words))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "kuXUnDkIaYwY",
+        "outputId": "f3bcf914-b72c-4e59-e75c-15ae2ebe2471"
+      },
+      "execution_count": 11,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "{'me', 'twelve', 'more', 'between', 'nobody', 'can', 'often', 'everywhere', 'beside', 'using', 'move', 'full', 'will', 'against', 'take', 'mostly', 'than', 'although', 'own', 'becoming', 'which', 'anywhere', 'beyond', 'former', 'because', 'get', 'during', 'someone', 'whom', 'much', 'they', 'four', 'under', 'seems', 'next', 'thence', '‘d', 'after', 'my', 'several', 'these', 'nevertheless', '’m', 'out', 'with', 'keep', 'thereafter', 'at', 'almost', '’ll', 'always', 'see', 'serious', 'myself', 'via', 'about', 'n‘t', 'other', 'yourselves', 'or', 'for', '’re', 'latter', 'afterwards', \"'d\", 'over', 'were', 'became', 'i', 'further', 'around', 'amongst', 'used', 'do', 'seem', 'this', 'less', 'them', 'third', 'below', \"'s\", 'alone', 'part', 'give', 'anything', 'whither', 'does', 'thereby', 'meanwhile', 'an', 'same', 'many', 'among', 'make', 'hereafter', 'behind', 'unless', 'whereas', 'due', 'cannot', 'whether', 'elsewhere', 'become', 'ever', '‘re', 'go', 'toward', 'beforehand', 'everything', 'bottom', '‘m', 'without', 'except', 'very', 'hers', 'already', 'nowhere', 'her', 'eleven', 'thus', 'its', 'why', 'anyway', 'us', 'various', 'ca', 'both', 'we', 'in', \"'m\", 'but', 'from', 'has', 'on', 'through', 'am', 'back', 'anyhow', 'our', 'all', 'whence', '’s', 'wherein', 'where', 'would', 'as', 'enough', '‘ll', 'every', 'when', 'whatever', 'two', 'last', 'front', 'while', 'along', 'the', 'please', 'whenever', 'everyone', 'nine', 'throughout', 'whereafter', 'indeed', 'nothing', 'off', 'wherever', 'into', 'you', 'namely', 'well', 'by', 'anyone', 'yourself', 'ten', 'any', 'never', 'really', 'another', 'mine', 'above', 'formerly', 'still', 'fifty', 'not', 'she', 'therefore', 'though', 'could', 'doing', 'are', 'somehow', 'there', 'since', 'be', 'somewhere', 'per', 'either', 'just', 'was', 'had', 'ourselves', 'herein', '’d', 'and', 'hundred', 'is', 'therein', 'noone', 'been', 'five', 'moreover', 'hereupon', 'name', 'twenty', 'say', 'hereby', \"'ll\", 'itself', 'him', 'eight', \"n't\", 'herself', 'perhaps', 'themselves', 'did', 'may', 'together', 'some', 'towards', 'now', 'something', 'seeming', 'onto', 'himself', 'have', 'ours', 'thereupon', 'also', 'top', '‘s', 'must', 'most', 'if', 'put', 'might', 'sometime', 'rather', 'hence', 'within', 'besides', \"'re\", 'such', 'three', 'up', '’ve', 'neither', 'who', 'your', 'even', 'across', 'what', 'side', 'whoever', 'however', 'becomes', '‘ve', 'once', 'done', 'again', 'made', 'least', \"'ve\", 'nor', 'his', 'quite', 'only', 'too', 'whole', 'before', 'empty', 'otherwise', 'none', 'down', 'latterly', 'first', 'should', 'upon', 'whereby', 'regarding', 'here', 'n’t', 'thru', 'six', 'how', 'call', 'others', 'their', 'no', 'so', 'amount', 'of', 'show', 'sixty', 'that', 'to', 'whereupon', 'else', 'yet', 'then', 'whose', 'few', 'being', 'a', 'until', 'forty', 'each', 'seemed', 'sometimes', 'yours', 're', 'it', 'one', 'he', 'those', 'fifteen'}\n",
+            "{'me', 'twelve', 'un', \"doesn't\", 'more', 'between', 'nobody', 'can', 'often', 'everywhere', 'beside', 'using', 'move', \"we'd\", 'full', 'will', 'against', 'take', 'mostly', 'than', \"you've\", 'although', 'fire', 'shouldn', 'own', 'becoming', 'which', 'didn', 'anywhere', 'beyond', 'having', \"haven't\", 'former', \"she'll\", 'because', 'get', 'during', 'someone', 'whom', 'much', 'they', 'four', 'under', \"mightn't\", 'seems', 'next', 'thence', '‘d', \"don't\", 'after', 'my', 'several', 'these', 'nevertheless', '’m', 'out', 'ie', 'with', 'keep', 'thereafter', 'etc', 'at', 'almost', '’ll', 'always', 'see', \"he's\", 'serious', 'myself', 'inc', 'via', 'about', 'n‘t', 'other', 'cant', 'yourselves', 'or', 'aren', 'for', \"we've\", '’re', \"you'll\", 'latter', \"they'd\", 'afterwards', \"'d\", 'over', 'were', 's', 'became', 'i', \"i'll\", 'further', 'around', 'amongst', \"didn't\", 'used', 'do', 'seem', 'this', 'less', 'them', 'third', 'below', \"'s\", 'alone', 'part', 'give', 'anything', 'whither', 'does', 'thereby', 'meanwhile', 'an', 'describe', 'same', 'many', 'among', 'make', 'hereafter', 'behind', 'unless', 'whereas', 'll', 'due', 'cannot', \"should've\", 'whether', 'elsewhere', 'become', 'ever', '‘re', 'go', 'toward', 'beforehand', \"you'd\", \"they'll\", 'everything', 'bottom', 'mill', '‘m', 'without', 'except', 'mustn', 'very', 'hers', 'already', 'nowhere', 'her', 'eleven', 'thus', 'its', 'why', 'anyway', 'weren', 'detail', 'us', 'amoungst', 'various', 'ca', 'both', 'we', 'in', \"'m\", 'but', 'from', 'has', 'on', 'hasnt', 'through', 'am', 'back', 'anyhow', 'our', 'all', 'whence', '’s', 'wherein', 'where', 'm', 'would', 'as', 'enough', '‘ll', 'every', 'when', 'hadn', 'whatever', 'two', 'doesn', 'last', 'front', 'while', 'along', 'the', 'please', 'whenever', 'everyone', 'nine', 'throughout', 'whereafter', 'indeed', 'haven', 'cry', \"it'd\", 'nothing', 'off', \"she'd\", 'wasn', 'wherever', 'into', 'you', 'namely', \"he'd\", 'y', \"they're\", 'well', 'by', 'anyone', 'yourself', 'ten', 'couldnt', 'any', 'never', 'really', 'another', 'mine', \"shouldn't\", 'ma', 'above', 'formerly', 'still', 'needn', 'fifty', 'not', 'she', 'd', 'de', 'therefore', 'though', 'could', 'doing', 'are', 'somehow', 'shan', 'there', 'since', 'be', 've', 'somewhere', 'per', 'either', 'found', 'sincere', 'just', 'was', 'had', 'ourselves', \"that'll\", 'herein', '’d', 'and', 'hundred', 'is', 'therein', 'noone', 'been', 'five', \"we'll\", 'moreover', 'hereupon', 'name', \"she's\", 't', 'twenty', 'say', 'hereby', \"'ll\", 'itself', 'him', 'eight', \"wouldn't\", \"n't\", 'o', 'herself', 'perhaps', 'themselves', \"we're\", 'did', 'may', 'together', 'co', 'some', \"i'd\", \"couldn't\", 'wouldn', 'towards', \"hasn't\", \"mustn't\", 'now', 'something', 'seeming', 'onto', 'himself', 'have', 'ours', \"needn't\", 'thereupon', \"wasn't\", 'also', 'eg', 'top', 'ain', \"shan't\", '‘s', 'must', 'most', 'couldn', 'if', \"isn't\", 'put', 'might', 'sometime', 'rather', 'hence', 'within', 'besides', \"'re\", 'such', 'three', 'up', '’ve', 'neither', 'who', 'your', 'even', 'across', 'what', \"i'm\", 'side', 'whoever', 'however', 'becomes', '‘ve', 'once', 'done', \"you're\", 'again', 'made', 'least', \"'ve\", 'nor', 'his', 'quite', 'ltd', 'interest', 'only', 'too', 'theirs', 'whole', 'before', 'empty', 'otherwise', 'mightn', 'thick', \"aren't\", 'none', 'down', 'latterly', 'first', 'should', 'upon', 'won', 'whereby', \"i've\", 'regarding', \"they've\", 'here', 'n’t', 'thru', 'six', \"weren't\", 'hasn', 'how', 'call', 'others', 'their', 'no', 'so', 'amount', 'of', 'show', 'sixty', \"he'll\", 'that', 'to', \"it'll\", 'whereupon', 'else', \"hadn't\", 'yet', 'then', 'whose', 'find', 'few', \"it's\", 'fill', 'being', 'a', \"won't\", 'bill', 'until', 'forty', 'con', 'each', 'seemed', 'sometimes', 'don', 'yours', 're', 'isn', 'it', 'one', 'he', 'those', 'thin', 'fifteen', 'system'}\n",
+            "428\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**Stemming** : Stemming is the process of reducing a word to its “root” or base form, even if it’s not a real word. Example: playing → play, was → wa"
+      ],
+      "metadata": {
+        "id": "6eRdiYiGakWh"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "'''\n",
+        "Stem each word → reduce to its root form.\n",
+        "'''\n",
+        "from nltk.stem import PorterStemmer #nltk.stem is a module in NLTK for word stemming and lemmatization, get a tool to reduce words to their root form\n",
+        "from nltk.tokenize import word_tokenize #PorterStemmer is a class that implements the Porter Stemming algorithm\n",
+        "stemmer= PorterStemmer()\n",
+        "text10 = 'The city of Auckalnd\\'s team is Blues but its not confirmed'\n",
+        "print(text10)\n",
+        "text10_tokens=word_tokenize(text10)\n",
+        "for word in text10_tokens:\n",
+        "    print(stemmer.stem(word))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "pt0LK86laoUs",
+        "outputId": "ec8647b2-2201-404a-c62b-4c5229bf1841"
+      },
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "The city of Auckalnd's team is Blues but its not confirmed\n",
+            "the\n",
+            "citi\n",
+            "of\n",
+            "auckalnd\n",
+            "'s\n",
+            "team\n",
+            "is\n",
+            "blue\n",
+            "but\n",
+            "it\n",
+            "not\n",
+            "confirm\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**Lemmatization** : Converts word to its dictionary form, considering grammar and context. Example: playing → play, was → be"
+      ],
+      "metadata": {
+        "id": "D9wf45LsiVBu"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "'''WordNet is a large lexical database of English.\n",
+        "\n",
+        "It organizes words into synonyms, lemmas, and semantic relationships.\n",
+        "\n",
+        "NLTK uses WordNet for lemmatization, so it knows the dictionary form of words.'''\n",
+        "'''\n",
+        "Open Multilingual Wordnet\n",
+        "\n",
+        "Provides additional language support and some extra WordNet data.\n",
+        "\n",
+        "Needed in recent NLTK versions to make lemmatization work fully.'''\n",
+        "\n",
+        "import nltk\n",
+        "nltk.download('wordnet')\n",
+        "nltk.download('omw-1.4')"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "AcmYnNYfiXNQ",
+        "outputId": "68659b10-4f08-4bcc-b394-22bc5d4f7077"
+      },
+      "execution_count": 13,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "[nltk_data] Downloading package wordnet to /root/nltk_data...\n",
+            "[nltk_data] Downloading package omw-1.4 to /root/nltk_data...\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "True"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 13
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from nltk.stem import WordNetLemmatizer\n",
+        "from nltk.tokenize import word_tokenize\n",
+        "lemmatizer=WordNetLemmatizer()\n",
+        "for word in text10_tokens:\n",
+        "    print(lemmatizer.lemmatize(word))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "H4jZiLfHk5Kf",
+        "outputId": "5e3bf3cf-85c5-4bf6-f814-a3d4bd6385d4"
+      },
+      "execution_count": 14,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "The\n",
+            "city\n",
+            "of\n",
+            "Auckalnd\n",
+            "'s\n",
+            "team\n",
+            "is\n",
+            "Blues\n",
+            "but\n",
+            "it\n",
+            "not\n",
+            "confirmed\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**Lets write a function to extract bi-grams**\n",
+        "\n",
+        "Also observe how we can extract the components of the bi-gram. Can you modify the funciton to extract tri-grams?"
+      ],
+      "metadata": {
+        "id": "VsIzCjX1lPZj"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import nltk\n",
+        "text = nltk.word_tokenize(\"The quick brown fox jumped on the lazy dog.\")\n",
+        "\n",
+        "def find_bigrams(input_list):\n",
+        "  bigram_list = []\n",
+        "  for i in range(len(input_list)-1):\n",
+        "      bigram_list.append((input_list[i], input_list[i+1]))\n",
+        "  return bigram_list\n",
+        "\n",
+        "#get individual items from the bigram\n",
+        "bigrams = find_bigrams(text)\n",
+        "print(f\"Print bigram : \", bigrams)\n",
+        "print(len(bigrams))\n",
+        "print(bigrams[2].__getitem__(0))\n",
+        "print(bigrams[2].__getitem__(1))\n",
+        "\n"
+      ],
+      "metadata": {
+        "id": "vAYo3kyLl5R4",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "fdd6613a-fd05-4831-aae5-7a6fcf8b98ab"
+      },
+      "execution_count": 17,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Print bigram :  [('The', 'quick'), ('quick', 'brown'), ('brown', 'fox'), ('fox', 'jumped'), ('jumped', 'on'), ('on', 'the'), ('the', 'lazy'), ('lazy', 'dog'), ('dog', '.')]\n",
+            "9\n",
+            "brown\n",
+            "fox\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**Lets use the n-gram function from NLTK** : An n-gram is a sequence of n consecutive elements from text.\n",
+        "\n",
+        "Examples:\n",
+        "\n",
+        "1-gram (unigram): single words\n",
+        "\n",
+        "2-gram (bigram): pairs of words\n",
+        "\n",
+        "3-gram (trigram): triples of words"
+      ],
+      "metadata": {
+        "id": "XX9pqOzX68OH"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "'''\n",
+        "The .split() method belongs to Python’s string (str) object.\n",
+        "It splits the text wherever it finds a separator.'''\n",
+        "from nltk import ngrams\n",
+        "sentence = 'The quick brown fox jumped over the lazy dog.'\n",
+        "n = 3\n",
+        "gramsList = ngrams(sentence.split(), n)\n",
+        "ngrams = []\n",
+        "for grams in gramsList:\n",
+        "  ngrams.append(grams)\n",
+        "print(ngrams)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "UgEjoFaM6-gx",
+        "outputId": "29684155-dc58-4e77-ca8f-563824b7df28"
+      },
+      "execution_count": 19,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[('The', 'quick', 'brown'), ('quick', 'brown', 'fox'), ('brown', 'fox', 'jumped'), ('fox', 'jumped', 'over'), ('jumped', 'over', 'the'), ('over', 'the', 'lazy'), ('the', 'lazy', 'dog.')]\n"
+          ]
+        }
+      ]
     }
   ]
 }
